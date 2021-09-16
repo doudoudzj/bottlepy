@@ -1,0 +1,18 @@
+{
+    "name": "bottlepy-docs",
+    "version": "1.0.0",
+    "description": "the unofficial docs for bottlepy",
+    "main": "index.js",
+    "author": "Jackson Dou <doudoudzj@qq.com>",
+    "repository": "https://github.com/doudoudzj/bottlepy.git",
+    "scripts": {
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@vuepress/plugin-back-to-top": "^1.8.2",
+        "@vuepress/plugin-google-analytics": "^1.8.2",
+        "vuepress": "^1.8.2"
+    }
+}

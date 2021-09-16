@@ -1,0 +1,44 @@
+## USER’S GUIDE
+
+Start here if you want to learn how to use the bottle framework for web development. If you have any questions not answered here, feel free to ask the [mailing list](mailto:bottlepy@googlegroups.com).
+
+-   Tutorial
+    -   [Installation](guide/tutorial.md#installation)
+    -   [Quickstart: “Hello World”](guide/tutorial.html#quickstart-hello-world)
+    -   [Request Routing](guide/tutorial.html#request-routing)
+    -   [Generating content](guide/tutorial.html#generating-content)
+    -   [Request Data](guide/tutorial.html#request-data)
+    -   [Templates](guide/tutorial.html#templates)
+    -   [Plugins](guide/tutorial.html#plugins)
+    -   [Development](guide/tutorial.html#development)
+    -   [Deployment](guide/tutorial.html#deployment)
+    -   [Glossary](guide/tutorial.html#glossary)
+-   Configuration (DRAFT)
+    -   [Configuration Basics](http://bottlepy.org/docs/dev/configuration.html#configuration-basics)
+    -   [Naming Convention](http://bottlepy.org/docs/dev/configuration.html#naming-convention)
+    -   [Loading Configuration from a File](http://bottlepy.org/docs/dev/configuration.html#loading-configuration-from-a-file)
+    -   [Loading Configuration from a python module](http://bottlepy.org/docs/dev/configuration.html#loading-configuration-from-a-python-module)
+    -   [Loading Configuration from a nested `dict`](http://bottlepy.org/docs/dev/configuration.html#loading-configuration-from-a-nested-dict)
+    -   [Listening to configuration changes](http://bottlepy.org/docs/dev/configuration.html#listening-to-configuration-changes)
+    -   [Filters and other Meta Data](http://bottlepy.org/docs/dev/configuration.html#filters-and-other-meta-data)
+    -   [API Documentation](http://bottlepy.org/docs/dev/configuration.html#api-documentation)
+-   Request Routing
+    -   [Rule Syntax](http://bottlepy.org/docs/dev/routing.html#rule-syntax)
+    -   [Wildcard Filters](http://bottlepy.org/docs/dev/routing.html#wildcard-filters)
+    -   [Legacy Syntax](http://bottlepy.org/docs/dev/routing.html#legacy-syntax)
+    -   [Explicit routing configuration](http://bottlepy.org/docs/dev/routing.html#explicit-routing-configuration)
+-   SimpleTemplate Engine
+    -   [`SimpleTemplate` Syntax](http://bottlepy.org/docs/dev/stpl.html#simpletemplate-syntax)
+    -   [Template Functions](http://bottlepy.org/docs/dev/stpl.html#template-functions)
+    -   [`SimpleTemplate` API](http://bottlepy.org/docs/dev/stpl.html#simpletemplate-api)
+-   Deployment
+    -   [Server Options](http://bottlepy.org/docs/dev/deployment.html#server-options)
+    -   [Switching the Server Backend](http://bottlepy.org/docs/dev/deployment.html#switching-the-server-backend)
+    -   [Good old CGI](http://bottlepy.org/docs/dev/deployment.html#good-old-cgi)
+-   API Reference
+    -   [Module Contents](http://bottlepy.org/docs/dev/api.html#module-contents)
+    -   [The `Bottle` Class](http://bottlepy.org/docs/dev/api.html#the-bottle-class)
+    -   [The `Request` Object](http://bottlepy.org/docs/dev/api.html#the-request-object)
+    -   [The `Response` Object](http://bottlepy.org/docs/dev/api.html#the-response-object)
+    -   [Templates](http://bottlepy.org/docs/dev/api.html#templates)
+-   [List of available Plugins](http://bottlepy.org/docs/dev/plugins/index.html)
