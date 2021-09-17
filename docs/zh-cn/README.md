@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /hero.png
-actionText: Get Started →
+actionText: 快速上手 →
 actionLink: v0.12/getting-started
 features:
     - title: Routing
