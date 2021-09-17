@@ -1,5 +1,5 @@
 # bottlepy docs
 
-the unofficial docs for bottlepy
+the Unofficial Docs for Bottlepy
 
 URL: https://bottlepy.pages.dev
