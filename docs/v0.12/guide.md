@@ -1,0 +1,44 @@
+## USER’S GUIDE
+
+Start here if you want to learn how to use the bottle framework for web development. If you have any questions not answered here, feel free to ask the [mailing list](mailto:bottlepy@googlegroups.com).
+
+-   Tutorial
+    -   [Installation](tutorial.md#installation)
+    -   [Quickstart: “Hello World”](tutorial.html#quickstart-hello-world)
+    -   [Request Routing](tutorial.html#request-routing)
+    -   [Generating content](tutorial.html#generating-content)
+    -   [Request Data](tutorial.html#request-data)
+    -   [Templates](tutorial.html#templates)
+    -   [Plugins](tutorial.html#plugins)
+    -   [Development](tutorial.html#development)
+    -   [Deployment](tutorial.html#deployment)
+    -   [Glossary](tutorial.html#glossary)
+-   Configuration (DRAFT)
+    -   [Configuration Basics](configuration.html#configuration-basics)
+    -   [Naming Convention](configuration.html#naming-convention)
+    -   [Loading Configuration from a File](configuration.html#loading-configuration-from-a-file)
+    -   [Loading Configuration from a python module](configuration.html#loading-configuration-from-a-python-module)
+    -   [Loading Configuration from a nested `dict`](configuration.html#loading-configuration-from-a-nested-dict)
+    -   [Listening to configuration changes](configuration.html#listening-to-configuration-changes)
+    -   [Filters and other Meta Data](configuration.html#filters-and-other-meta-data)
+    -   [API Documentation](configuration.html#api-documentation)
+-   Request Routing
+    -   [Rule Syntax](routing.html#rule-syntax)
+    -   [Wildcard Filters](routing.html#wildcard-filters)
+    -   [Legacy Syntax](routing.html#legacy-syntax)
+    -   [Explicit routing configuration](routing.html#explicit-routing-configuration)
+-   SimpleTemplate Engine
+    -   [`SimpleTemplate` Syntax](stpl.html#simpletemplate-syntax)
+    -   [Template Functions](stpl.html#template-functions)
+    -   [`SimpleTemplate` API](stpl.html#simpletemplate-api)
+-   Deployment
+    -   [Server Options](deployment.html#server-options)
+    -   [Switching the Server Backend](deployment.html#switching-the-server-backend)
+    -   [Good old CGI](deployment.html#good-old-cgi)
+-   API Reference
+    -   [Module Contents](api.html#module-contents)
+    -   [The `Bottle` Class](api.html#the-bottle-class)
+    -   [The `Request` Object](api.html#the-request-object)
+    -   [The `Response` Object](api.html#the-response-object)
+    -   [Templates](api.html#templates)
+-   [List of available Plugins](plugins/index.html)

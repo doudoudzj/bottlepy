@@ -1,8 +1,10 @@
+---
+navbar: true
+---
+
 # Tutorial
 
-This tutorial introduces you to the concepts and features of the Bottle web framework and covers basic and advanced topics alike. You can read it from start to end, or use it as a reference later on. The automatically generated [API Reference](http://bottlepy.org/docs/dev/api.html) may be interesting for you, too. It covers more details, but explains less than this tutorial. Solutions for the most common questions can be found in our [Recipes](http://bottlepy.org/docs/dev/recipes.html) collection or on the [Frequently Asked Questions](http://bottlepy.org/docs/dev/faq.html) page. If you need any help, join our [mailing list](mailto:bottlepy@googlegroups.com) or visit us in our [IRC channel](http://webchat.freenode.net/?channels=bottlepy).
-
-
+This tutorial introduces you to the concepts and features of the Bottle web framework and covers basic and advanced topics alike. You can read it from start to end, or use it as a reference later on. The automatically generated [API Reference](api.md) may be interesting for you, too. It covers more details, but explains less than this tutorial. Solutions for the most common questions can be found in our [Recipes](recipes.html) collection or on the [Frequently Asked Questions](faq.html) page. If you need any help, join our [mailing list](mailto:bottlepy@googlegroups.com) or visit us in our [IRC channel](http://webchat.freenode.net/?channels=bottlepy).
 
 ## INSTALLATION
 
@@ -39,7 +41,7 @@ $ source develop/bin/activate     # Change default python to virtual one
 
 ## QUICKSTART: “HELLO WORLD”
 
-This tutorial assumes you have Bottle either [installed](http://bottlepy.org/docs/dev/tutorial.html#installation) or copied into your project directory. Let’s start with a very basic “Hello World” example:
+This tutorial assumes you have Bottle either [installed](tutorial.html#installation) or copied into your project directory. Let’s start with a very basic “Hello World” example:
 
 ```python
 from bottle import route, run
@@ -53,19 +55,17 @@ run(host='localhost', port=8080, debug=True)
 
 This is it. Run this script, visit http://localhost:8080/hello and you will see “Hello World!” in your browser. Here is how it works:
 
-The [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator binds a piece of code to an URL path. In this case, we link the `/hello` path to the `hello()` function. This is called a route (hence the decorator name) and is the most important concept of this framework. You can define as many routes as you want. Whenever a browser requests a URL, the associated function is called and the return value is sent back to the browser. It’s as simple as that.
+The [`route()`](api.md#bottle.route) decorator binds a piece of code to an URL path. In this case, we link the `/hello` path to the `hello()` function. This is called a route (hence the decorator name) and is the most important concept of this framework. You can define as many routes as you want. Whenever a browser requests a URL, the associated function is called and the return value is sent back to the browser. It’s as simple as that.
 
-The [`run()`](http://bottlepy.org/docs/dev/api.html#bottle.run) call in the last line starts a built-in development server. It runs on `localhost` port `8080` and serves requests until you hit `Control-c`. You can switch the server backend later, but for now a development server is all we need. It requires no setup at all and is an incredibly painless way to get your application up and running for local tests.
+The [`run()`](api.md#bottle.run) call in the last line starts a built-in development server. It runs on `localhost` port `8080` and serves requests until you hit `Control-c`. You can switch the server backend later, but for now a development server is all we need. It requires no setup at all and is an incredibly painless way to get your application up and running for local tests.
 
-The [Debug Mode](http://bottlepy.org/docs/dev/tutorial.html#tutorial-debugging) is very helpful during early development, but should be switched off for public applications. Keep that in mind.
+The [Debug Mode](tutorial.html#tutorial-debugging) is very helpful during early development, but should be switched off for public applications. Keep that in mind.
 
 This is just a demonstration of the basic concept of how applications are built with Bottle. Continue reading and you’ll see what else is possible.
 
-
-
 ### THE DEFAULT APPLICATION
 
-For the sake of simplicity, most examples in this tutorial use a module-level [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator to define routes. This adds routes to a global “default application”, an instance of [`Bottle`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle) that is automatically created the first time you call [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route). Several other module-level decorators and functions relate to this default application, but if you prefer a more object oriented approach and don’t mind the extra typing, you can create a separate application object and use that instead of the global one:
+For the sake of simplicity, most examples in this tutorial use a module-level [`route()`](api.md#bottle.route) decorator to define routes. This adds routes to a global “default application”, an instance of [`Bottle`](api.md#bottle.Bottle) that is automatically created the first time you call [`route()`](api.md#bottle.route). Several other module-level decorators and functions relate to this default application, but if you prefer a more object oriented approach and don’t mind the extra typing, you can create a separate application object and use that instead of the global one:
 
 ```python
 from bottle import Bottle, run
@@ -79,9 +79,7 @@ def hello():
 run(app, host='localhost', port=8080)
 ```
 
-The object-oriented approach is further described in the [Default Application](http://bottlepy.org/docs/dev/tutorial.html#default-app) section. Just keep in mind that you have a choice.
-
-
+The object-oriented approach is further described in the [Default Application](tutorial.html#default-app) section. Just keep in mind that you have a choice.
 
 ## REQUEST ROUTING
 
@@ -93,7 +91,7 @@ def hello():
     return "Hello World!"
 ```
 
-The [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator links an URL path to a callback function, and adds a new route to the [default application](http://bottlepy.org/docs/dev/tutorial.html#tutorial-default). An application with just one route is kind of boring, though. Let’s add some more (don’t forget `from bottle import template`):
+The [`route()`](api.md#bottle.route) decorator links an URL path to a callback function, and adds a new route to the [default application](tutorial.html#tutorial-default). An application with just one route is kind of boring, though. Let’s add some more (don’t forget `from bottle import template`):
 
 ```python
 @route('/')
@@ -103,8 +101,6 @@ def greet(name='Stranger'):
 ```
 
 This example demonstrates two things: You can bind more than one route to a single callback, and you can add wildcards to URLs and access them via keyword arguments.
-
-
 
 ### DYNAMIC ROUTES
 
@@ -126,10 +122,10 @@ Filters can be used to define more specific wildcards, and/or transform the cove
 
 The following filters are implemented by default and more may be added:
 
-- **:int** matches (signed) digits only and converts the value to integer.
-- **:float** similar to :int but for decimal numbers.
-- **:path** matches all characters including the slash character in a non-greedy way and can be used to match more than one path segment.
-- **:re** allows you to specify a custom regular expression in the config field. The matched value is not modified.
+-   **:int** matches (signed) digits only and converts the value to integer.
+-   **:float** similar to :int but for decimal numbers.
+-   **:path** matches all characters including the slash character in a non-greedy way and can be used to match more than one path segment.
+-   **:re** allows you to specify a custom regular expression in the config field. The matched value is not modified.
 
 Let’s have a look at some practical examples:
 
@@ -147,11 +143,11 @@ def callback(path):
     return static_file(path, ...)
 ```
 
-You can add your own filters as well. See [Request Routing](http://bottlepy.org/docs/dev/routing.html) for details.
+You can add your own filters as well. See [Request Routing](routing.html) for details.
 
 ### HTTP REQUEST METHODS
 
-The HTTP protocol defines several [request methods](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) (sometimes referred to as “verbs”) for different tasks. GET is the default for all routes with no other method specified. These routes will match GET requests only. To handle other methods such as POST, PUT, DELETE or PATCH, add a `method` keyword argument to the [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator or use one of the five alternative decorators: [`get()`](http://bottlepy.org/docs/dev/api.html#bottle.get), [`post()`](http://bottlepy.org/docs/dev/api.html#bottle.post), [`put()`](http://bottlepy.org/docs/dev/api.html#bottle.put), [`delete()`](http://bottlepy.org/docs/dev/api.html#bottle.delete) or [`patch()`](http://bottlepy.org/docs/dev/api.html#bottle.patch).
+The HTTP protocol defines several [request methods](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) (sometimes referred to as “verbs”) for different tasks. GET is the default for all routes with no other method specified. These routes will match GET requests only. To handle other methods such as POST, PUT, DELETE or PATCH, add a `method` keyword argument to the [`route()`](api.md#bottle.route) decorator or use one of the five alternative decorators: [`get()`](api.md#bottle.get), [`post()`](api.md#bottle.post), [`put()`](api.md#bottle.put), [`delete()`](api.md#bottle.delete) or [`patch()`](api.md#bottle.patch).
 
 The POST method is commonly used for HTML form submission. This example shows how to handle a login form using POST:
 
@@ -178,13 +174,13 @@ def do_login():
         return "<p>Login failed.</p>"
 ```
 
-In this example the `/login` URL is linked to two distinct callbacks, one for GET requests and another for POST requests. The first one displays a HTML form to the user. The second callback is invoked on a form submission and checks the login credentials the user entered into the form. The use of `Request.forms` is further described in the [Request Data](http://bottlepy.org/docs/dev/tutorial.html#tutorial-request) section.
+In this example the `/login` URL is linked to two distinct callbacks, one for GET requests and another for POST requests. The first one displays a HTML form to the user. The second callback is invoked on a form submission and checks the login credentials the user entered into the form. The use of `Request.forms` is further described in the [Request Data](tutorial.html#tutorial-request) section.
 
 Special Methods: HEAD and ANY
 
 The HEAD method is used to ask for the response identical to the one that would correspond to a GET request, but without the response body. This is useful for retrieving meta-information about a resource without having to download the entire document. Bottle handles these requests automatically by falling back to the corresponding GET route and cutting off the request body, if present. You don’t have to specify any HEAD routes yourself.
 
-Additionally, the non-standard ANY method works as a low priority fallback: Routes that listen to ANY will match requests regardless of their HTTP method but only if no other more specific route is defined. This is helpful for *proxy-routes* that redirect requests to more specific sub-applications.
+Additionally, the non-standard ANY method works as a low priority fallback: Routes that listen to ANY will match requests regardless of their HTTP method but only if no other more specific route is defined. This is helpful for _proxy-routes_ that redirect requests to more specific sub-applications.
 
 To sum it up: HEAD requests fall back to GET routes and all requests fall back to ANY routes, but only if there is no matching route for the original request method. It’s as simple as that.
 
@@ -199,7 +195,7 @@ def server_static(filename):
     return static_file(filename, root='/path/to/your/static/files')
 ```
 
-The `static_file()` function is a helper to serve files in a safe and convenient way (see [Static Files](http://bottlepy.org/docs/dev/tutorial.html#tutorial-static-files)). This example is limited to files directly within the `/path/to/your/static/files` directory because the `<filename>` wildcard won’t match a path with a slash in it. To serve files in subdirectories, change the wildcard to use the path filter:
+The `static_file()` function is a helper to serve files in a safe and convenient way (see [Static Files](tutorial.html#tutorial-static-files)). This example is limited to files directly within the `/path/to/your/static/files` directory because the `<filename>` wildcard won’t match a path with a slash in it. To serve files in subdirectories, change the wildcard to use the path filter:
 
 ```python
 @route('/static/<filepath:path>')
@@ -209,11 +205,9 @@ def server_static(filepath):
 
 Be careful when specifying a relative root-path such as `root='./static/files'`. The working directory (`./`) and the project directory are not always the same.
 
-
-
 ### ERROR PAGES
 
-If anything goes wrong, Bottle displays an informative but fairly plain error page. You can override the default for a specific HTTP status code with the [`error()`](http://bottlepy.org/docs/dev/api.html#bottle.error) decorator:
+If anything goes wrong, Bottle displays an informative but fairly plain error page. You can override the default for a specific HTTP status code with the [`error()`](api.md#bottle.error) decorator:
 
 ```python
 from bottle import error
@@ -222,11 +216,9 @@ def error404(error):
     return 'Nothing here, sorry'
 ```
 
-From now on, 404 File not Found errors will display a custom error page to the user. The only parameter passed to the error-handler is an instance of [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError). Apart from that, an error-handler is quite similar to a regular request callback. You can read from [`request`](http://bottlepy.org/docs/dev/api.html#bottle.request), write to [`response`](http://bottlepy.org/docs/dev/api.html#bottle.response) and return any supported data-type except for [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError) instances.
+From now on, 404 File not Found errors will display a custom error page to the user. The only parameter passed to the error-handler is an instance of [`HTTPError`](api.md#bottle.HTTPError). Apart from that, an error-handler is quite similar to a regular request callback. You can read from [`request`](api.md#bottle.request), write to [`response`](api.md#bottle.response) and return any supported data-type except for [`HTTPError`](api.md#bottle.HTTPError) instances.
 
-Error handlers are used only if your application returns or raises an [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError) exception (`abort()` does just that). Changing `Request.status` or returning [`HTTPResponse`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPResponse) won’t trigger the error handler.
-
-
+Error handlers are used only if your application returns or raises an [`HTTPError`](api.md#bottle.HTTPError) exception (`abort()` does just that). Changing `Request.status` or returning [`HTTPResponse`](api.md#bottle.HTTPResponse) won’t trigger the error handler.
 
 ## GENERATING CONTENT
 
@@ -234,39 +226,39 @@ In pure WSGI, the range of types you may return from your application is very li
 
 Bottle is much more flexible and supports a wide range of types. It even adds a `Content-Length` header if possible and encodes unicode automatically, so you don’t have to. What follows is a list of data types you may return from your application callbacks and a short description of how these are handled by the framework:
 
-- Dictionaries
+-   Dictionaries
 
-  As mentioned above, Python dictionaries (or subclasses thereof) are automatically transformed into JSON strings and returned to the browser with the `Content-Type` header set to `application/json`. This makes it easy to implement json-based APIs. Data formats other than json are supported too. See the tutorial-output-filter to learn more.
+    As mentioned above, Python dictionaries (or subclasses thereof) are automatically transformed into JSON strings and returned to the browser with the `Content-Type` header set to `application/json`. This makes it easy to implement json-based APIs. Data formats other than json are supported too. See the tutorial-output-filter to learn more.
 
-- Empty Strings, `False`, `None` or other non-true values:
+-   Empty Strings, `False`, `None` or other non-true values:
 
-  These produce an empty output with the `Content-Length` header set to 0.
+    These produce an empty output with the `Content-Length` header set to 0.
 
-- Unicode strings
+-   Unicode strings
 
-  Unicode strings (or iterables yielding unicode strings) are automatically encoded with the codec specified in the `Content-Type` header (utf8 by default) and then treated as normal byte strings (see below).
+    Unicode strings (or iterables yielding unicode strings) are automatically encoded with the codec specified in the `Content-Type` header (utf8 by default) and then treated as normal byte strings (see below).
 
-- Byte strings
+-   Byte strings
 
-  Bottle returns strings as a whole (instead of iterating over each char) and adds a `Content-Length` header based on the string length. Lists of byte strings are joined first. Other iterables yielding byte strings are not joined because they may grow too big to fit into memory. The `Content-Length` header is not set in this case.
+    Bottle returns strings as a whole (instead of iterating over each char) and adds a `Content-Length` header based on the string length. Lists of byte strings are joined first. Other iterables yielding byte strings are not joined because they may grow too big to fit into memory. The `Content-Length` header is not set in this case.
 
-- Instances of [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError) or [`HTTPResponse`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPResponse)
+-   Instances of [`HTTPError`](api.md#bottle.HTTPError) or [`HTTPResponse`](api.md#bottle.HTTPResponse)
 
-  Returning these has the same effect as when raising them as an exception. In case of an [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError), the error handler is applied. See [Error Pages](http://bottlepy.org/docs/dev/tutorial.html#tutorial-errorhandling) for details.
+    Returning these has the same effect as when raising them as an exception. In case of an [`HTTPError`](api.md#bottle.HTTPError), the error handler is applied. See [Error Pages](tutorial.html#tutorial-errorhandling) for details.
 
-- File objects
+-   File objects
 
-  Everything that has a `.read()` method is treated as a file or file-like object and passed to the `wsgi.file_wrapper` callable defined by the WSGI server framework. Some WSGI server implementations can make use of optimized system calls (sendfile) to transmit files more efficiently. In other cases this just iterates over chunks that fit into memory. Optional headers such as `Content-Length` or `Content-Type` are *not* set automatically. Use `send_file()` if possible. See [Static Files](http://bottlepy.org/docs/dev/tutorial.html#tutorial-static-files) for details.
+    Everything that has a `.read()` method is treated as a file or file-like object and passed to the `wsgi.file_wrapper` callable defined by the WSGI server framework. Some WSGI server implementations can make use of optimized system calls (sendfile) to transmit files more efficiently. In other cases this just iterates over chunks that fit into memory. Optional headers such as `Content-Length` or `Content-Type` are _not_ set automatically. Use `send_file()` if possible. See [Static Files](tutorial.html#tutorial-static-files) for details.
 
-- Iterables and generators
+-   Iterables and generators
 
-  You are allowed to use `yield` within your callbacks or return an iterable, as long as the iterable yields byte strings, unicode strings, [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError) or [`HTTPResponse`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPResponse) instances. Nested iterables are not supported, sorry. Please note that the HTTP status code and the headers are sent to the browser as soon as the iterable yields its first non-empty value. Changing these later has no effect.
+    You are allowed to use `yield` within your callbacks or return an iterable, as long as the iterable yields byte strings, unicode strings, [`HTTPError`](api.md#bottle.HTTPError) or [`HTTPResponse`](api.md#bottle.HTTPResponse) instances. Nested iterables are not supported, sorry. Please note that the HTTP status code and the headers are sent to the browser as soon as the iterable yields its first non-empty value. Changing these later has no effect.
 
 The ordering of this list is significant. You may for example return a subclass of [`str`](https://docs.python.org/3/library/stdtypes.html#str) with a `read()` method. It is still treated as a string instead of a file, because strings are handled first.
 
 Changing the Default Encoding
 
-Bottle uses the charset parameter of the `Content-Type` header to decide how to encode unicode strings. This header defaults to `text/html; charset=UTF8` and can be changed using the `Response.content_type` attribute or by setting the `Response.charset` attribute directly. (The [`Response`](http://bottlepy.org/docs/dev/api.html#bottle.Response) object is described in the section [The Response Object](http://bottlepy.org/docs/dev/tutorial.html#tutorial-response).)
+Bottle uses the charset parameter of the `Content-Type` header to decide how to encode unicode strings. This header defaults to `text/html; charset=UTF8` and can be changed using the `Response.content_type` attribute or by setting the `Response.charset` attribute directly. (The [`Response`](api.md#bottle.Response) object is described in the section [The Response Object](tutorial.html#tutorial-response).)
 
 ```python
 from bottle import response
@@ -282,8 +274,6 @@ def get_latin():
 ```
 
 In some rare cases the Python encoding names differ from the names supported by the HTTP specification. Then, you have to do both: first set the `Response.content_type` header (which is sent to the client unchanged) and then set the `Response.charset` attribute (which is used to encode unicode).
-
-
 
 ### STATIC FILES
 
@@ -314,8 +304,6 @@ def download(filename):
 
 If the `download` parameter is just `True`, the original filename is used.
 
-
-
 ### HTTP ERRORS AND REDIRECTS
 
 The `abort()` function is a shortcut for generating HTTP error pages.
@@ -340,21 +328,19 @@ You may provide a different HTTP status code as a second parameter.
 
 Note
 
-Both functions will interrupt your callback code by raising an [`HTTPResponse`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPResponse) exception.
+Both functions will interrupt your callback code by raising an [`HTTPResponse`](api.md#bottle.HTTPResponse) exception.
 
 Other Exceptions
 
-All exceptions other than [`HTTPResponse`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPResponse) or [`HTTPError`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPError) will result in a `500 Internal Server Error` response, so they won’t crash your WSGI server. You can turn off this behavior to handle exceptions in your middleware by setting `bottle.app().catchall` to `False`.
+All exceptions other than [`HTTPResponse`](api.md#bottle.HTTPResponse) or [`HTTPError`](api.md#bottle.HTTPError) will result in a `500 Internal Server Error` response, so they won’t crash your WSGI server. You can turn off this behavior to handle exceptions in your middleware by setting `bottle.app().catchall` to `False`.
 
+### THE [`RESPONSE`](api.md#bottle.Response) OBJECT
 
-
-### THE [`RESPONSE`](http://bottlepy.org/docs/dev/api.html#bottle.Response) OBJECT
-
-Response metadata such as the HTTP status code, response headers and cookies are stored in an object called [`response`](http://bottlepy.org/docs/dev/api.html#bottle.response) up to the point where they are transmitted to the browser. You can manipulate these metadata directly or use the predefined helper methods to do so. The full API and feature list is described in the API section (see [`Response`](http://bottlepy.org/docs/dev/api.html#bottle.Response)), but the most common use cases and features are covered here, too.
+Response metadata such as the HTTP status code, response headers and cookies are stored in an object called [`response`](api.md#bottle.response) up to the point where they are transmitted to the browser. You can manipulate these metadata directly or use the predefined helper methods to do so. The full API and feature list is described in the API section (see [`Response`](api.md#bottle.Response)), but the most common use cases and features are covered here, too.
 
 Status Code
 
-The [HTTP status code](http://bottlepy.org/docs/dev/http_code) controls the behavior of the browser and defaults to `200 OK`. In most scenarios you won’t need to set the `Response.status` attribute manually, but use the `abort()` helper or return an [`HTTPResponse`](http://bottlepy.org/docs/dev/api.html#bottle.HTTPResponse) instance with the appropriate status code. Any integer is allowed, but codes other than the ones defined by the [HTTP specification](http://bottlepy.org/docs/dev/http_code) will only confuse the browser and break standards.
+The [HTTP status code](http_code) controls the behavior of the browser and defaults to `200 OK`. In most scenarios you won’t need to set the `Response.status` attribute manually, but use the `abort()` helper or return an [`HTTPResponse`](api.md#bottle.HTTPResponse) instance with the appropriate status code. Any integer is allowed, but codes other than the ones defined by the [HTTP specification](http_code) will only confuse the browser and break standards.
 
 Response Header
 
@@ -374,9 +360,7 @@ response.set_header('Set-Cookie', 'name=value')
 response.add_header('Set-Cookie', 'name2=value2')
 ```
 
-Please note that this is just an example. If you want to work with cookies, read [ahead](http://bottlepy.org/docs/dev/tutorial.html#tutorial-cookies).
-
-
+Please note that this is just an example. If you want to work with cookies, read [ahead](tutorial.html#tutorial-cookies).
 
 ### COOKIES
 
@@ -394,20 +378,20 @@ def hello_again():
 
 The `Response.set_cookie()` method accepts a number of additional keyword arguments that control the cookies lifetime and behavior. Some of the most common settings are described here:
 
-- **max_age:** Maximum age in seconds. (default: `None`)
-- **expires:** A datetime object or UNIX timestamp. (default: `None`)
-- **domain:** The domain that is allowed to read the cookie. (default: current domain)
-- **path:** Limit the cookie to a given path (default: `/`)
-- **secure:** Limit the cookie to HTTPS connections (default: off).
-- **httponly:** Prevent client-side javascript to read this cookie (default: off, requires Python 2.7 or newer).
-- **same_site:** Disables third-party use for a cookie. Allowed attributes: lax and strict. In strict mode the cookie will never be sent. In lax mode the cookie is only sent with a top-level GET request.
+-   **max_age:** Maximum age in seconds. (default: `None`)
+-   **expires:** A datetime object or UNIX timestamp. (default: `None`)
+-   **domain:** The domain that is allowed to read the cookie. (default: current domain)
+-   **path:** Limit the cookie to a given path (default: `/`)
+-   **secure:** Limit the cookie to HTTPS connections (default: off).
+-   **httponly:** Prevent client-side javascript to read this cookie (default: off, requires Python 2.7 or newer).
+-   **same_site:** Disables third-party use for a cookie. Allowed attributes: lax and strict. In strict mode the cookie will never be sent. In lax mode the cookie is only sent with a top-level GET request.
 
 If neither expires nor max_age is set, the cookie expires at the end of the browser session or as soon as the browser window is closed. There are some other gotchas you should consider when using cookies:
 
-- Cookies are limited to 4 KB of text in most browsers.
-- Some users configure their browsers to not accept cookies at all. Most search engines ignore cookies too. Make sure that your application still works without cookies.
-- Cookies are stored at client side and are not encrypted in any way. Whatever you store in a cookie, the user can read it. Worse than that, an attacker might be able to steal a user’s cookies through [XSS](http://en.wikipedia.org/wiki/HTTP_cookie#Cookie_theft_and_session_hijacking) vulnerabilities on your side. Some viruses are known to read the browser cookies, too. Thus, never store confidential information in cookies.
-- Cookies are easily forged by malicious clients. Do not trust cookies.
+-   Cookies are limited to 4 KB of text in most browsers.
+-   Some users configure their browsers to not accept cookies at all. Most search engines ignore cookies too. Make sure that your application still works without cookies.
+-   Cookies are stored at client side and are not encrypted in any way. Whatever you store in a cookie, the user can read it. Worse than that, an attacker might be able to steal a user’s cookies through [XSS](http://en.wikipedia.org/wiki/HTTP_cookie#Cookie_theft_and_session_hijacking) vulnerabilities on your side. Some viruses are known to read the browser cookies, too. Thus, never store confidential information in cookies.
+-   Cookies are easily forged by malicious clients. Do not trust cookies.
 
 Signed Cookies
 
@@ -439,11 +423,9 @@ Warning
 
 Signed cookies are not encrypted (the client can still see the content) and not copy-protected (the client can restore an old cookie). The main intention is to make pickling and unpickling safe and prevent manipulation, not to store secret information at client side.
 
-
-
 ## REQUEST DATA
 
-Cookies, HTTP header, HTML `<form>` fields and other request data is available through the global [`request`](http://bottlepy.org/docs/dev/api.html#bottle.request) object. This special object always refers to the *current* request, even in multi-threaded environments where multiple client connections are handled at the same time:
+Cookies, HTTP header, HTML `<form>` fields and other request data is available through the global [`request`](api.md#bottle.request) object. This special object always refers to the _current_ request, even in multi-threaded environments where multiple client connections are handled at the same time:
 
 ```
 from bottle import request, route, template
@@ -454,11 +436,11 @@ def hello():
     return template('Hello {{name}}', name=name)
 ```
 
-The [`request`](http://bottlepy.org/docs/dev/api.html#bottle.request) object is a subclass of [`BaseRequest`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest) and has a very rich API to access data. We only cover the most commonly used features here, but it should be enough to get started.
+The [`request`](api.md#bottle.request) object is a subclass of [`BaseRequest`](api.md#bottle.BaseRequest) and has a very rich API to access data. We only cover the most commonly used features here, but it should be enough to get started.
 
-### INTRODUCING [`FORMSDICT`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict)
+### INTRODUCING [`FORMSDICT`](api.md#bottle.FormsDict)
 
-Bottle uses a special type of dictionary to store form data and cookies. [`FormsDict`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict) behaves like a normal dictionary, but has some additional features to make your life easier.
+Bottle uses a special type of dictionary to store form data and cookies. [`FormsDict`](api.md#bottle.FormsDict) behaves like a normal dictionary, but has some additional features to make your life easier.
 
 **Attribute access**: All values in the dictionary are also accessible as attributes. These virtual attributes return unicode strings, even if the value is missing or unicode decoding fails. In that case, the string is empty, but still present:
 
@@ -477,18 +459,18 @@ except UnicodeError:
     name = u''
 ```
 
-**Multiple values per key:** [`FormsDict`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict) is a subclass of [`MultiDict`](http://bottlepy.org/docs/dev/api.html#bottle.MultiDict) and can store more than one value per key. The standard dictionary access methods will only return a single value, but the [`getall()`](http://bottlepy.org/docs/dev/api.html#bottle.MultiDict.getall) method returns a (possibly empty) list of all values for a specific key:
+**Multiple values per key:** [`FormsDict`](api.md#bottle.FormsDict) is a subclass of [`MultiDict`](api.md#bottle.MultiDict) and can store more than one value per key. The standard dictionary access methods will only return a single value, but the [`getall()`](api.md#bottle.MultiDict.getall) method returns a (possibly empty) list of all values for a specific key:
 
 ```
 for choice in request.forms.getall('multiple_choice'):
     do_something(choice)
 ```
 
-**WTForms support:** Some libraries (e.g. [WTForms](http://wtforms.simplecodes.com/)) want all-unicode dictionaries as input. [`FormsDict.decode()`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict.decode) does that for you. It decodes all values and returns a copy of itself, while preserving multiple values per key and all the other features.
+**WTForms support:** Some libraries (e.g. [WTForms](http://wtforms.simplecodes.com/)) want all-unicode dictionaries as input. [`FormsDict.decode()`](api.md#bottle.FormsDict.decode) does that for you. It decodes all values and returns a copy of itself, while preserving multiple values per key and all the other features.
 
 Note
 
-In **Python 2** all keys and values are byte-strings. If you need unicode, you can call [`FormsDict.getunicode()`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict.getunicode) or fetch values via attribute access. Both methods try to decode the string (default: utf8) and return an empty string if that fails. No need to catch [`UnicodeError`](https://docs.python.org/3/library/exceptions.html#UnicodeError):
+In **Python 2** all keys and values are byte-strings. If you need unicode, you can call [`FormsDict.getunicode()`](api.md#bottle.FormsDict.getunicode) or fetch values via attribute access. Both methods try to decode the string (default: utf8) and return an empty string if that fails. No need to catch [`UnicodeError`](https://docs.python.org/3/library/exceptions.html#UnicodeError):
 
 ```
 >>> request.query['city']
@@ -497,7 +479,7 @@ In **Python 2** all keys and values are byte-strings. If you need unicode, you c
 u'Göttingen'        # The same string as unicode
 ```
 
-In **Python 3** all strings are unicode, but HTTP is a byte-based wire protocol. The server has to decode the byte strings somehow before they are passed to the application. To be on the safe side, WSGI suggests ISO-8859-1 (aka latin1), a reversible single-byte codec that can be re-encoded with a different encoding later. Bottle does that for [`FormsDict.getunicode()`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict.getunicode) and attribute access, but not for the dict-access methods. These return the unchanged values as provided by the server implementation, which is probably not what you want.
+In **Python 3** all strings are unicode, but HTTP is a byte-based wire protocol. The server has to decode the byte strings somehow before they are passed to the application. To be on the safe side, WSGI suggests ISO-8859-1 (aka latin1), a reversible single-byte codec that can be re-encoded with a different encoding later. Bottle does that for [`FormsDict.getunicode()`](api.md#bottle.FormsDict.getunicode) and attribute access, but not for the dict-access methods. These return the unchanged values as provided by the server implementation, which is probably not what you want.
 
 ```
 >>> request.query['city']
@@ -506,13 +488,13 @@ In **Python 3** all strings are unicode, but HTTP is a byte-based wire protocol.
 'Göttingen'  # The same string correctly re-encoded as utf8 by bottle
 ```
 
-If you need the whole dictionary with correctly decoded values (e.g. for WTForms), you can call [`FormsDict.decode()`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict.decode) to get a re-encoded copy.
+If you need the whole dictionary with correctly decoded values (e.g. for WTForms), you can call [`FormsDict.decode()`](api.md#bottle.FormsDict.decode) to get a re-encoded copy.
 
 ### COOKIES
 
 Cookies are small pieces of text stored in the clients browser and sent back to the server with each request. They are useful to keep some state around for more than one request (HTTP itself is stateless), but should not be used for security related stuff. They can be easily forged by the client.
 
-All cookies sent by the client are available through [`BaseRequest.cookies`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.cookies) (a [`FormsDict`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict)). This example shows a simple cookie-based view counter:
+All cookies sent by the client are available through [`BaseRequest.cookies`](api.md#bottle.BaseRequest.cookies) (a [`FormsDict`](api.md#bottle.FormsDict)). This example shows a simple cookie-based view counter:
 
 ```
 from bottle import route, request, response
@@ -524,11 +506,11 @@ def counter():
     return 'You visited this page %d times' % count
 ```
 
-The [`BaseRequest.get_cookie()`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.get_cookie) method is a different way do access cookies. It supports decoding [signed cookies](http://bottlepy.org/docs/dev/tutorial.html#tutorial-signed-cookies) as described in a separate section.
+The [`BaseRequest.get_cookie()`](api.md#bottle.BaseRequest.get_cookie) method is a different way do access cookies. It supports decoding [signed cookies](tutorial.html#tutorial-signed-cookies) as described in a separate section.
 
 ### HTTP HEADERS
 
-All HTTP headers sent by the client (e.g. `Referer`, `Agent` or `Accept-Language`) are stored in a [`WSGIHeaderDict`](http://bottlepy.org/docs/dev/api.html#bottle.WSGIHeaderDict) and accessible through the [`BaseRequest.headers`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.headers) attribute. A [`WSGIHeaderDict`](http://bottlepy.org/docs/dev/api.html#bottle.WSGIHeaderDict) is basically a dictionary with case-insensitive keys:
+All HTTP headers sent by the client (e.g. `Referer`, `Agent` or `Accept-Language`) are stored in a [`WSGIHeaderDict`](api.md#bottle.WSGIHeaderDict) and accessible through the [`BaseRequest.headers`](api.md#bottle.BaseRequest.headers) attribute. A [`WSGIHeaderDict`](api.md#bottle.WSGIHeaderDict) is basically a dictionary with case-insensitive keys:
 
 ```
 from bottle import route, request
@@ -542,22 +524,23 @@ def is_ajax():
 
 ### QUERY VARIABLES
 
-The query string (as in `/forum?id=1&page=5`) is commonly used to transmit a small number of key/value pairs to the server. You can use the [`BaseRequest.query`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.query) attribute (a [`FormsDict`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict)) to access these values and the [`BaseRequest.query_string`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.query_string) attribute to get the whole string.
+The query string (as in `/forum?id=1&page=5`) is commonly used to transmit a small number of key/value pairs to the server. You can use the [`BaseRequest.query`](api.md#bottle.BaseRequest.query) attribute (a [`FormsDict`](api.md#bottle.FormsDict)) to access these values and the [`BaseRequest.query_string`](api.md#bottle.BaseRequest.query_string) attribute to get the whole string.
 
-```
+```python
 from bottle import route, request, response, template
 @route('/forum')
 def display_forum():
     forum_id = request.query.id
     page = request.query.page or '1'
-    return template('Forum ID: {{id}} (page {{page}})', id=forum_id, page=page)
+    return template("Forum ID: {id} (page {page})", id=forum_id, page=page)
 ```
+
 
 ### HTML <FORM> HANDLING
 
 Let us start from the beginning. In HTML, a typical `<form>` looks something like this:
 
-```
+```html
 <form action="/login" method="post">
     Username: <input name="username" type="text" />
     Password: <input name="password" type="password" />
@@ -565,11 +548,11 @@ Let us start from the beginning. In HTML, a typical `<form>` looks something lik
 </form>
 ```
 
-The `action` attribute specifies the URL that will receive the form data. `method` defines the HTTP method to use (`GET` or `POST`). With `method="get"` the form values are appended to the URL and available through [`BaseRequest.query`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.query) as described above. This is considered insecure and has other limitations, so we use `method="post"` here. If in doubt, use `POST` forms.
+The `action` attribute specifies the URL that will receive the form data. `method` defines the HTTP method to use (`GET` or `POST`). With `method="get"` the form values are appended to the URL and available through [`BaseRequest.query`](api.md#bottle.BaseRequest.query) as described above. This is considered insecure and has other limitations, so we use `method="post"` here. If in doubt, use `POST` forms.
 
-Form fields transmitted via `POST` are stored in [`BaseRequest.forms`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.forms) as a [`FormsDict`](http://bottlepy.org/docs/dev/api.html#bottle.FormsDict). The server side code may look like this:
+Form fields transmitted via `POST` are stored in [`BaseRequest.forms`](api.md#bottle.BaseRequest.forms) as a [`FormsDict`](api.md#bottle.FormsDict). The server side code may look like this:
 
-```
+```python
 from bottle import route, request
 
 @route('/login')
@@ -594,20 +577,20 @@ def do_login():
 
 There are several other attributes used to access form data. Some of them combine values from different sources for easier access. The following table should give you a decent overview.
 
-| Attribute                                                    | GET Form fields | POST Form fields | File Uploads |
-| :----------------------------------------------------------- | :-------------- | :--------------- | :----------- |
-| [`BaseRequest.query`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.query) | yes             | no               | no           |
-| [`BaseRequest.forms`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.forms) | no              | yes              | no           |
-| [`BaseRequest.files`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.files) | no              | no               | yes          |
-| [`BaseRequest.params`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.params) | yes             | yes              | no           |
-| [`BaseRequest.GET`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.GET) | yes             | no               | no           |
-| [`BaseRequest.POST`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.POST) | no              | yes              | yes          |
+| Attribute                                                  | GET Form fields | POST Form fields | File Uploads |
+| :--------------------------------------------------------- | :-------------- | :--------------- | :----------- |
+| [`BaseRequest.query`](api.md#bottle.BaseRequest.query)   | yes             | no               | no           |
+| [`BaseRequest.forms`](api.md#bottle.BaseRequest.forms)   | no              | yes              | no           |
+| [`BaseRequest.files`](api.md#bottle.BaseRequest.files)   | no              | no               | yes          |
+| [`BaseRequest.params`](api.md#bottle.BaseRequest.params) | yes             | yes              | no           |
+| [`BaseRequest.GET`](api.md#bottle.BaseRequest.GET)       | yes             | no               | no           |
+| [`BaseRequest.POST`](api.md#bottle.BaseRequest.POST)     | no              | yes              | yes          |
 
 ### FILE UPLOADS
 
 To support file uploads, we have to change the `<form>` tag a bit. First, we tell the browser to encode the form data in a different way by adding an `enctype="multipart/form-data"` attribute to the `<form>` tag. Then, we add `<input type="file" />` tags to allow the user to select a file. Here is an example:
 
-```
+```html
 <form action="/upload" method="post" enctype="multipart/form-data">
   Category:      <input type="text" name="category" />
   Select a file: <input type="file" name="upload" />
@@ -615,9 +598,9 @@ To support file uploads, we have to change the `<form>` tag a bit. First, we tel
 </form>
 ```
 
-Bottle stores file uploads in [`BaseRequest.files`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.files) as [`FileUpload`](http://bottlepy.org/docs/dev/api.html#bottle.FileUpload) instances, along with some metadata about the upload. Let us assume you just want to save the file to disk:
+Bottle stores file uploads in [`BaseRequest.files`](api.md#bottle.BaseRequest.files) as [`FileUpload`](api.md#bottle.FileUpload) instances, along with some metadata about the upload. Let us assume you just want to save the file to disk:
 
-```
+```python
 @route('/upload', method='POST')
 def do_upload():
     category   = request.forms.get('category')
@@ -631,23 +614,23 @@ def do_upload():
     return 'OK'
 ```
 
-[`FileUpload.filename`](http://bottlepy.org/docs/dev/api.html#bottle.FileUpload.filename) contains the name of the file on the clients file system, but is cleaned up and normalized to prevent bugs caused by unsupported characters or path segments in the filename. If you need the unmodified name as sent by the client, have a look at [`FileUpload.raw_filename`](http://bottlepy.org/docs/dev/api.html#bottle.FileUpload.raw_filename).
+[`FileUpload.filename`](api.md#bottle.FileUpload.filename) contains the name of the file on the clients file system, but is cleaned up and normalized to prevent bugs caused by unsupported characters or path segments in the filename. If you need the unmodified name as sent by the client, have a look at [`FileUpload.raw_filename`](api.md#bottle.FileUpload.raw_filename).
 
-The [`FileUpload.save`](http://bottlepy.org/docs/dev/api.html#bottle.FileUpload.save) method is highly recommended if you want to store the file to disk. It prevents some common errors (e.g. it does not overwrite existing files unless you tell it to) and stores the file in a memory efficient way. You can access the file object directly via [`FileUpload.file`](http://bottlepy.org/docs/dev/api.html#bottle.FileUpload.file). Just be careful.
+The [`FileUpload.save`](api.md#bottle.FileUpload.save) method is highly recommended if you want to store the file to disk. It prevents some common errors (e.g. it does not overwrite existing files unless you tell it to) and stores the file in a memory efficient way. You can access the file object directly via [`FileUpload.file`](api.md#bottle.FileUpload.file). Just be careful.
 
 ### JSON CONTENT
 
-Some JavaScript or REST clients send `application/json` content to the server. The [`BaseRequest.json`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.json) attribute contains the parsed data structure, if available.
+Some JavaScript or REST clients send `application/json` content to the server. The [`BaseRequest.json`](api.md#bottle.BaseRequest.json) attribute contains the parsed data structure, if available.
 
 ### THE RAW REQUEST BODY
 
-You can access the raw body data as a file-like object via [`BaseRequest.body`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.body). This is a `BytesIO` buffer or a temporary file depending on the content length and [`BaseRequest.MEMFILE_MAX`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.MEMFILE_MAX) setting. In both cases the body is completely buffered before you can access the attribute. If you expect huge amounts of data and want to get direct unbuffered access to the stream, have a look at `request['wsgi.input']`.
+You can access the raw body data as a file-like object via [`BaseRequest.body`](api.md#bottle.BaseRequest.body). This is a `BytesIO` buffer or a temporary file depending on the content length and [`BaseRequest.MEMFILE_MAX`](api.md#bottle.BaseRequest.MEMFILE_MAX) setting. In both cases the body is completely buffered before you can access the attribute. If you expect huge amounts of data and want to get direct unbuffered access to the stream, have a look at `request['wsgi.input']`.
 
 ### WSGI ENVIRONMENT
 
-Each [`BaseRequest`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest) instance wraps a WSGI environment dictionary. The original is stored in [`BaseRequest.environ`](http://bottlepy.org/docs/dev/api.html#bottle.BaseRequest.environ), but the request object itself behaves like a dictionary, too. Most of the interesting data is exposed through special methods or attributes, but if you want to access [WSGI environ variables](http://bottlepy.org/docs/dev/WSGI_Specification) directly, you can do so:
+Each [`BaseRequest`](api.md#bottle.BaseRequest) instance wraps a WSGI environment dictionary. The original is stored in [`BaseRequest.environ`](api.md#bottle.BaseRequest.environ), but the request object itself behaves like a dictionary, too. Most of the interesting data is exposed through special methods or attributes, but if you want to access [WSGI environ variables](WSGI_Specification) directly, you can do so:
 
-```
+```python
 @route('/my_ip')
 def show_ip():
     ip = request.environ.get('REMOTE_ADDR')
@@ -656,13 +639,11 @@ def show_ip():
     return template("Your IP is: {{ip}}", ip=ip)
 ```
 
-
-
 ## TEMPLATES
 
-Bottle comes with a fast and powerful built-in template engine called [SimpleTemplate Engine](http://bottlepy.org/docs/dev/stpl.html). To render a template you can use the [`template()`](http://bottlepy.org/docs/dev/api.html#bottle.template) function or the [`view()`](http://bottlepy.org/docs/dev/api.html#bottle.view) decorator. All you have to do is to provide the name of the template and the variables you want to pass to the template as keyword arguments. Here’s a simple example of how to render a template:
+Bottle comes with a fast and powerful built-in template engine called [SimpleTemplate Engine](stpl.html). To render a template you can use the [`template()`](api.md#bottle.template) function or the [`view()`](api.md#bottle.view) decorator. All you have to do is to provide the name of the template and the variables you want to pass to the template as keyword arguments. Here’s a simple example of how to render a template:
 
-```
+```python
 @route('/hello')
 @route('/hello/<name>')
 def hello(name='World'):
@@ -671,7 +652,7 @@ def hello(name='World'):
 
 This will load the template file `hello_template.tpl` and render it with the `name` variable set. Bottle will look for templates in the `./views/` folder or any folder specified in the `bottle.TEMPLATE_PATH` list.
 
-The [`view()`](http://bottlepy.org/docs/dev/api.html#bottle.view) decorator allows you to return a dictionary with the template variables instead of calling [`template()`](http://bottlepy.org/docs/dev/api.html#bottle.template):
+The [`view()`](api.md#bottle.view) decorator allows you to return a dictionary with the template variables instead of calling [`template()`](api.md#bottle.template):
 
 ```
 @route('/hello')
@@ -683,7 +664,7 @@ def hello(name='World'):
 
 Syntax
 
-The template syntax is a very thin layer around the Python language. Its main purpose is to ensure correct indentation of blocks, so you can format your template without worrying about indentation. Follow the link for a full syntax description: [SimpleTemplate Engine](http://bottlepy.org/docs/dev/stpl.html)
+The template syntax is a very thin layer around the Python language. Its main purpose is to ensure correct indentation of blocks, so you can format your template without worrying about indentation. Follow the link for a full syntax description: [SimpleTemplate Engine](stpl.html)
 
 Here is an example template:
 
@@ -701,15 +682,13 @@ Caching
 
 Templates are cached in memory after compilation. Modifications made to the template files will have no affect until you clear the template cache. Call `bottle.TEMPLATES.clear()` to do so. Caching is disabled in debug mode.
 
-
-
 ## PLUGINS
 
-*New in version 0.9.*
+_New in version 0.9._
 
 Bottle’s core features cover most common use-cases, but as a micro-framework it has its limits. This is where “Plugins” come into play. Plugins add missing functionality to the framework, integrate third party libraries, or just automate some repetitive work.
 
-We have a growing [List of available Plugins](http://bottlepy.org/docs/dev/plugins/index.html) and most plugins are designed to be portable and re-usable across applications. The chances are high that your problem has already been solved and a ready-to-use plugin exists. If not, the [Plugin Development Guide](http://bottlepy.org/docs/dev/plugindev.html) may help you.
+We have a growing [List of available Plugins](plugins/index.html) and most plugins are designed to be portable and re-usable across applications. The chances are high that your problem has already been solved and a ready-to-use plugin exists. If not, the [Plugin Development Guide](plugindev.html) may help you.
 
 The effects and APIs of plugins are manifold and depend on the specific plugin. The `SQLitePlugin` plugin for example detects callbacks that require a `db` keyword argument and creates a fresh database connection object every time the callback is called. This makes it very convenient to use a database:
 
@@ -733,7 +712,7 @@ def contact_page():
     return template('contact')
 ```
 
-Other plugin may populate the thread-safe `local` object, change details of the [`request`](http://bottlepy.org/docs/dev/api.html#bottle.request) object, filter the data returned by the callback or bypass the callback completely. An “auth” plugin for example could check for a valid session and return a login page instead of calling the original callback. What happens exactly depends on the plugin.
+Other plugin may populate the thread-safe `local` object, change details of the [`request`](api.md#bottle.request) object, filter the data returned by the callback or bypass the callback completely. An “auth” plugin for example could check for a valid session and return a login page instead of calling the original callback. What happens exactly depends on the plugin.
 
 ### APPLICATION-WIDE INSTALLATION
 
@@ -768,11 +747,11 @@ Plugins can be installed and removed at any time, even at runtime while serving 
 
 Note
 
-The module-level `install()` and `uninstall()` functions affect the [Default Application](http://bottlepy.org/docs/dev/tutorial.html#default-app). To manage plugins for a specific application, use the corresponding methods on the [`Bottle`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle) application object.
+The module-level `install()` and `uninstall()` functions affect the [Default Application](tutorial.html#default-app). To manage plugins for a specific application, use the corresponding methods on the [`Bottle`](api.md#bottle.Bottle) application object.
 
 ### ROUTE-SPECIFIC INSTALLATION
 
-The `apply` parameter of the [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator comes in handy if you want to install plugins to only a small number of routes:
+The `apply` parameter of the [`route()`](api.md#bottle.route) decorator comes in handy if you want to install plugins to only a small number of routes:
 
 ```
 sqlite_plugin = SQLitePlugin(dbfile='/tmp/test.db')
@@ -784,7 +763,7 @@ def create(db):
 
 ### BLACKLISTING PLUGINS
 
-You may want to explicitly disable a plugin for a number of routes. The [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator has a `skip` parameter for this purpose:
+You may want to explicitly disable a plugin for a number of routes. The [`route()`](api.md#bottle.route) decorator has a `skip` parameter for this purpose:
 
 ```
 sqlite_plugin = SQLitePlugin(dbfile='/tmp/test1.db')
@@ -812,7 +791,7 @@ The `skip` parameter accepts a single value or a list of values. You can use a n
 
 ### PLUGINS AND SUB-APPLICATIONS
 
-Most plugins are specific to the application they were installed to. Consequently, they should not affect sub-applications mounted with [`Bottle.mount()`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle.mount). Here is an example:
+Most plugins are specific to the application they were installed to. Consequently, they should not affect sub-applications mounted with [`Bottle.mount()`](api.md#bottle.Bottle.mount). Here is an example:
 
 ```
 root = Bottle()
@@ -839,11 +818,9 @@ But there is a snag: The plugin sees the whole sub-application as a single route
 
 So you have learned the basics and want to write your own application? Here are some tips that might help you being more productive.
 
-
-
 ### DEFAULT APPLICATION
 
-Bottle maintains a global stack of [`Bottle`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle) instances and uses the top of the stack as a default for some of the module-level functions and decorators. The [`route()`](http://bottlepy.org/docs/dev/api.html#bottle.route) decorator, for example, is a shortcut for calling [`Bottle.route()`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle.route) on the default application:
+Bottle maintains a global stack of [`Bottle`](api.md#bottle.Bottle) instances and uses the top of the stack as a default for some of the module-level functions and decorators. The [`route()`](api.md#bottle.route) decorator, for example, is a shortcut for calling [`Bottle.route()`](api.md#bottle.Bottle.route) on the default application:
 
 ```
 @route('/')
@@ -865,11 +842,11 @@ def hello():
 app.run()
 ```
 
-Separating the application object improves re-usability a lot, too. Other developers can safely import the `app` object from your module and use [`Bottle.mount()`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle.mount) to merge applications together.
+Separating the application object improves re-usability a lot, too. Other developers can safely import the `app` object from your module and use [`Bottle.mount()`](api.md#bottle.Bottle.mount) to merge applications together.
 
-*New in version 0.13.*
+_New in version 0.13._
 
-Starting with bottle-0.13 you can use [`Bottle`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle) instances as context managers:
+Starting with bottle-0.13 you can use [`Bottle`](api.md#bottle.Bottle) instances as context managers:
 
 ```
 app = Bottle()
@@ -889,8 +866,6 @@ with app:
     import some_package.more_routes
 ```
 
-
-
 ### DEBUG MODE
 
 During early development, the debug mode can be very helpful.
@@ -903,9 +878,9 @@ In this mode, Bottle is much more verbose and provides helpful debugging informa
 
 Here is an incomplete list of things that change in debug mode:
 
-- The default error page shows a traceback.
-- Templates are not cached.
-- Plugins are applied immediately.
+-   The default error page shows a traceback.
+-   Templates are not cached.
+-   Plugins are applied immediately.
 
 Just make sure not to use the debug mode on a production server.
 
@@ -951,7 +926,7 @@ Options:
 
 The ADDRESS field takes an IP address or an IP:PORT pair and defaults to `localhost:8080`. The other parameters should be self-explanatory.
 
-Both plugins and applications are specified via import expressions. These consist of an import path (e.g. `package.module`) and an expression to be evaluated in the namespace of that module, separated by a colon. See [`load()`](http://bottlepy.org/docs/dev/api.html#bottle.load) for details. Here are some examples:
+Both plugins and applications are specified via import expressions. These consist of an import path (e.g. `package.module`) and an expression to be evaluated in the namespace of that module, separated by a colon. See [`load()`](api.md#bottle.load) for details. Here are some examples:
 
 ```
 # Grab the 'app' object from the 'myapp.controller' module and
@@ -980,28 +955,26 @@ The easiest way to increase performance is to install a multi-threaded server li
 bottle.run(server='paste')
 ```
 
-This, and many other deployment options are described in a separate article: [Deployment](http://bottlepy.org/docs/dev/deployment.html)
-
-
+This, and many other deployment options are described in a separate article: [Deployment](deployment.html)
 
 ## GLOSSARY
 
-- callback
+-   callback
 
-  Programmer code that is to be called when some external action happens. In the context of web frameworks, the mapping between URL paths and application code is often achieved by specifying a callback function for each URL.
+    Programmer code that is to be called when some external action happens. In the context of web frameworks, the mapping between URL paths and application code is often achieved by specifying a callback function for each URL.
 
-- decorator
+-   decorator
 
-  A function returning another function, usually applied as a function transformation using the `@decorator` syntax. See [python documentation for function definition](http://docs.python.org/reference/compound_stmts.html#function) for more about decorators.
+    A function returning another function, usually applied as a function transformation using the `@decorator` syntax. See [python documentation for function definition](http://docs.python.org/reference/compound_stmts.html#function) for more about decorators.
 
-- environ
+-   environ
 
-  A structure where information about all documents under the root is saved, and used for cross-referencing. The environment is pickled after the parsing stage, so that successive runs only need to read and parse new and changed documents.
+    A structure where information about all documents under the root is saved, and used for cross-referencing. The environment is pickled after the parsing stage, so that successive runs only need to read and parse new and changed documents.
 
-- handler function
+-   handler function
 
-  A function to handle some specific event or situation. In a web framework, the application is developed by attaching a handler function as callback for each specific URL comprising the application.
+    A function to handle some specific event or situation. In a web framework, the application is developed by attaching a handler function as callback for each specific URL comprising the application.
 
-- source directory
+-   source directory
 
-  The directory which, including its subdirectories, contains all source files for one Sphinx project.
+    The directory which, including its subdirectories, contains all source files for one Sphinx project.
