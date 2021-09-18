@@ -24,14 +24,14 @@ module.exports = {
         docsDir: 'docs/', // 文档源文件存放在仓库中的目录名
         editLinks: true,
         locales: localesConfig
-    }
-    // plugins: [
-    //     ['@vuepress/plugin-back-to-top', true],
-    //     [
-    //         '@vuepress/google-analytics',
-    //         {
-    //             ga: 'UA-28162642-12'
-    //         }
-    //     ]
-    // ]
+    },
+    plugins: [
+        ['@vuepress/plugin-back-to-top', true]
+        // [
+        //     '@vuepress/google-analytics',
+        //     {
+        //         ga: 'UA-28162642-12'
+        //     }
+        // ]
+    ]
 }

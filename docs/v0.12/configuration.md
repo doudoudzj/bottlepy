@@ -1,14 +1,14 @@
+---
+sidebar: auto
+---
+
 # Configuration (DRAFT)
 
-Warning
+Bottle applications can store their configuration in [`Bottle.config`](api.md#bottle.Bottle.config), a dict-like object and central place for application specific settings. This dictionary controls many aspects of the framework, tells (newer) plugins what to do, and can be used to store your own configuration as well.
 
-This is a draft for a new API. [Tell us](mailto:bottlepy@googlegroups.com) what you think.
+## Configuration Basics
 
-Bottle applications can store their configuration in [`Bottle.config`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle.config), a dict-like object and central place for application specific settings. This dictionary controls many aspects of the framework, tells (newer) plugins what to do, and can be used to store your own configuration as well.
-
-## CONFIGURATION BASICS
-
-The [`Bottle.config`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle.config) object behaves a lot like an ordinary dictionary. All the common dict methods work as expected. Let us start with some examples:
+The [`Bottle.config`](api.md#bottle.Bottle.config) object behaves a lot like an ordinary dictionary. All the common dict methods work as expected. Let us start with some examples:
 
 ```python
 import bottle
@@ -47,20 +47,23 @@ def is_admin(user):
     return user == request.app.config['myapp.admin_user']
 ```
 
-## NAMING CONVENTION
+## Naming Convention
 
 To make life easier, plugins and applications should follow some simple rules when it comes to config parameter names:
 
-- All keys should be lowercase strings and follow the rules for python identifiers (no special characters but the underscore).
-- Namespaces are separated by dots (e.g. `namespace.field` or `namespace.subnamespace.field`).
-- Bottle uses the root namespace for its own configuration. Plugins should store all their variables in their own namespace (e.g. `sqlite.db` or `werkzeug.use_debugger`).
-- Your own application should use a separate namespace (e.g. `myapp.*`).
+-   All keys should be lowercase strings and follow the rules for python identifiers (no special characters but the underscore).
+-   Namespaces are separated by dots (e.g. `namespace.field` or `namespace.subnamespace.field`).
+-   Bottle uses the root namespace for its own configuration. Plugins should store all their variables in their own namespace (e.g. `sqlite.db` or `werkzeug.use_debugger`).
+-   Your own application should use a separate namespace (e.g. `myapp.*`).
 
-## LOADING CONFIGURATION FROM A FILE
+## Loading Configuration from a File
 
 Configuration files are useful if you want to enable non-programmers to configure your application, or just don’t want to hack python module files just to change the database port. A very common syntax for configuration files is shown here:
 
 ```ini
+[bottle]
+debug = True
+
 [sqlite]
 db = /tmp/test.db
 commit = auto
@@ -69,31 +72,15 @@ commit = auto
 admin_user = defnull
 ```
 
-With [`ConfigDict.load_config()`](http://bottlepy.org/docs/dev/configuration.html#bottle.ConfigDict.load_config) you can load these `*.ini` style configuration files from disk and import their values into your existing configuration:
+With [`ConfigDict.load_config()`](configuration.md#bottle.ConfigDict.load_config) you can load these `*.ini` style configuration files from disk and import their values into your existing configuration:
 
-```
+```python
 app.config.load_config('/etc/myapp.conf')
 ```
 
-## LOADING CONFIGURATION FROM A PYTHON MODULE
+## Loading Configuration from a nested [`dict`](https://docs.python.org/3/library/stdtypes.html#dict)
 
-Loading configuration from a Python module is a common pattern for Python programs and frameworks. Bottle assumes that configuration keys are all upper case:
-
-You can load the this Python module with [:met:`ConfigDict.load_module`](http://bottlepy.org/docs/dev/configuration.html#id1):
-
-```shell
->>> c = ConfigDict()
->>> c.load_module('config')
-{DEBUG: True, 'SQLITE.DB': 'memory'}
->>> c.load_module("config", False)
-{'DEBUG': True, 'SQLITE': {'DB': 'memory'}}
-```
-
-Note the second parameter to disable loading as namespaced items as in [`ConfigDict.load_dict()`](http://bottlepy.org/docs/dev/configuration.html#bottle.ConfigDict.load_dict). By default, loading from a Python module will call this method, unless you specifically call this method with False as the second argument.
-
-## LOADING CONFIGURATION FROM A NESTED [`DICT`](https://docs.python.org/3/library/stdtypes.html#dict)
-
-Another useful method is [`ConfigDict.load_dict()`](http://bottlepy.org/docs/dev/configuration.html#bottle.ConfigDict.load_dict). This method takes an entire structure of nested dictionaries and turns it into a flat list of keys and values with namespaced keys:
+Another useful method is [`ConfigDict.load_dict()`](configuration.md#bottle.ConfigDict.load_dict). This method takes an entire structure of nested dictionaries and turns it into a flat list of keys and values with namespaced keys:
 
 ```python
 # Load an entire dict structure
@@ -113,9 +100,9 @@ with open('/etc/myapp.json') as fp:
     app.config.load_dict(json.load(fp))
 ```
 
-## LISTENING TO CONFIGURATION CHANGES
+## Listening to configuration changes
 
-The `config` hook on the application object is triggered each time a value in [`Bottle.config`](http://bottlepy.org/docs/dev/api.html#bottle.Bottle.config) is changed. This hook can be used to react on configuration changes at runtime, for example reconnect to a new database, change the debug settings on a background service or resize worker thread pools. The hook callback receives two arguments (key, new_value) and is called before the value is actually changed in the dictionary. Raising an exception from a hook callback cancels the change and the old value is preserved.
+The `config` hook on the application object is triggered each time a value in [`Bottle.config`](api.md#bottle.Bottle.config) is changed. This hook can be used to react on configuration changes at runtime, for example reconnect to a new database, change the debug settings on a background service or resize worker thread pools. The hook callback receives two arguments (key, new_value) and is called before the value is actually changed in the dictionary. Raising an exception from a hook callback cancels the change and the old value is preserved.
 
 ```python
 @app.hook('config')
@@ -124,19 +111,19 @@ def on_config_change(key, value):
       switch_own_debug_mode_to(value)
 ```
 
-The hook callbacks cannot *change* the value that is to be stored to the dictionary. That is what filters are for.
+The hook callbacks cannot _change_ the value that is to be stored to the dictionary. That is what filters are for.
 
-## FILTERS AND OTHER META DATA
+## Filters and other Meta Data
 
-[`ConfigDict`](http://bottlepy.org/docs/dev/configuration.html#bottle.ConfigDict) allows you to store meta data along with configuration keys. Two meta fields are currently defined:
+[`ConfigDict`](configuration.md#bottle.ConfigDict) allows you to store meta data along with configuration keys. Two meta fields are currently defined:
 
-- help
+-   help
 
-  A help or description string. May be used by debugging, introspection or admin tools to help the site maintainer configuring their application.
+    A help or description string. May be used by debugging, introspection or admin tools to help the site maintainer configuring their application.
 
-- filter
+-   filter
 
-  A callable that accepts and returns a single value. If a filter is defined for a key, any new value stored to that key is first passed through the filter callback. The filter can be used to cast the value to a different type, check for invalid values (throw a ValueError) or trigger side effects.
+    A callable that accepts and returns a single value. If a filter is defined for a key, any new value stored to that key is first passed through the filter callback. The filter can be used to cast the value to a different type, check for invalid values (throw a ValueError) or trigger side effects.
 
 This feature is most useful for plugins. They can validate their config parameters or trigger side effects using filters and document their configuration via `help` fields:
 
@@ -160,39 +147,32 @@ app.config['some.list'] = 'a;b;c'     # Actually stores ['a', 'b', 'c']
 app.config['some.int'] = 'not an int' # raises ValueError
 ```
 
-## API DOCUMENTATION
+## API Documentation
 
-*class* `ConfigDict`[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict)
+class **ConfigDict**(`*a, **ka`) [source](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict)
 
-A dict-like configuration storage with additional support for namespaces, validators, meta-data, overlays and more.
+A dict-like configuration storage with additional support for namespaces, validators, meta-data, on_change listeners and more.
 
-This dict-like class is heavily optimized for read access. All read-only methods as well as item access should be as fast as the built-in dict.
+This storage is optimized for fast read access. Retrieving a key or using non-altering dict methods (e.g. dict.get()) has no overhead compared to a native dict.
 
-- `load_module`(*path*, *squash=True*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.load_module)
+**load_config**(`_filename_`) [source](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict.load_config)
 
-  Load values from a Python module.Example modue `config.py`:`DEBUG = True SQLITE = {    "db": ":memory:" } ``>>> c = ConfigDict() >>> c.load_module('config') {DEBUG: True, 'SQLITE.DB': 'memory'} >>> c.load_module("config", False) {'DEBUG': True, 'SQLITE': {'DB': 'memory'}} `Parameters:**squash** – If true (default), dictionary values are assumed to represent namespaces (see [`load_dict()`](http://bottlepy.org/docs/dev/configuration.html#bottle.ConfigDict.load_dict)).
+Load values from an \*.ini style config file. If the config file contains sections, their names are used as namespaces for the values within. The two special sections `DEFAULT` and `bottle` refer to the root namespace (no prefix).
 
-- `load_config`(*filename*, ***options*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.load_config)
+**load_dict**(`_source_, _namespace=''_, _make_namespaces=False_`) [source](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict.load_dict)
 
-  Load values from an `*.ini` style config file.A configuration file consists of sections, each led by a `[section]` header, followed by key/value entries separated by either `=` or `:`. Section names and keys are case-insensitive. Leading and trailing whitespace is removed from keys and values. Values can be omitted, in which case the key/value delimiter may also be left out. Values can also span multiple lines, as long as they are indented deeper than the first line of the value. Commands are prefixed by `#` or `;` and may only appear on their own on an otherwise empty line.Both section and key names may contain dots (`.`) as namespace separators. The actual configuration parameter name is constructed by joining section name and key name together and converting to lower case.The special sections `bottle` and `ROOT` refer to the root namespace and the `DEFAULT` section defines default values for all other sections.With Python 3, extended string interpolation is enabled.Parameters:**filename** – The path of a config file, or a list of paths.**options** – All keyword parameters are passed to the underlying [`configparser.ConfigParser`](https://docs.python.org/3/library/configparser.html#configparser.ConfigParser) constructor call.
+Import values from a dictionary structure. Nesting can be used to represent namespaces. `>>> ConfigDict().load_dict({'name': {'space': {'key': 'value'}}}) {'name.space.key': 'value'}`
 
-- `load_dict`(*source*, *namespace=''*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.load_dict)
+**update**(`*a, **ka`) [source](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict.update)
 
-  Load values from a dictionary structure. Nesting can be used to represent namespaces.`>>> c = ConfigDict() >>> c.load_dict({'some': {'namespace': {'key': 'value'} } }) {'some.namespace.key': 'value'} `
+*If the first parameter is a string, all keys are prefixed with this namespace. Apart from that it works just as the usual dict.update(). Example: `update('some.namespace', key='value')`
 
-- `update`(**a*, ***ka*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.update)
+**meta_get**(`key, metafield, default=None`) [source](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict.meta_get)
 
-  If the first parameter is a string, all keys are prefixed with this namespace. Apart from that it works just as the usual dict.update().`>>> c = ConfigDict() >>> c.update('some.namespace', key='value') `
+Return the value of a meta field for a key.
 
-- `meta_get`(*key*, *metafield*, *default=None*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.meta_get)
+**meta_set**(`_key_, _metafield_, _value_`) [source](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict.meta_set)
 
-  Return the value of a meta field for a key.
+Set the meta field for a key to a new value. This triggers the on-change handler for existing keys. `meta_list`*(_key_)*[source]](http://bottlepy.org/docs/0.12/_modules/bottle.html#ConfigDict.meta_list)
 
-- `meta_set`(*key*, *metafield*, *value*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.meta_set)
-
-  Set the meta field for a key to a new value.
-
-- `meta_list`(*key*)[[source\]](http://bottlepy.org/docs/dev/_modules/bottle.html#ConfigDict.meta_list)
-
-  Return an iterable of meta field names defined for a key.
-
+Return an iterable of meta field names defined for a key.

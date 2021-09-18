@@ -18,7 +18,8 @@ module.exports = {
     algolia: {},
     nav: [
         { text: '首页', link: '/zh-cn/' },
-        { text: '用户指南', link: '/zh-cn/guide/' }
+        { text: '用户指南', link: '/zh-cn/guide/' },
+        { text: 'Bottlepy官网', link: 'http://bottlepy.org' }
     ]
     // sidebar: 'auto'
     // sidebar: {

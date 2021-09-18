@@ -13,7 +13,8 @@ module.exports = {
     algolia: {},
     nav: [
         { text: 'Home', link: '/' },
-        { text: 'Guide', link: '/guide/' }
+        { text: 'Guide', link: '/guide/' },
+        { text: 'Bottlepy', link: 'http://bottlepy.org' }
     ]
     // sidebar: 'auto'
     // sidebar: {
